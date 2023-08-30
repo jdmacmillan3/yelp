@@ -1,0 +1,3 @@
+0000000000000000000000000000000000000000 52c1858830e2f552a3904440f2eb3c5b89ec67f7 John Davis MacMillan <jdmacmil@ncsu.edu> 1692815719 -0400	commit (initial): Initialize project using Create React App
+52c1858830e2f552a3904440f2eb3c5b89ec67f7 5f6d677ef2fe8583c027c867d8ec38b182967520 John Davis MacMillan <jdmacmil@ncsu.edu> 1693234831 -0400	commit: Initial commit
+5f6d677ef2fe8583c027c867d8ec38b182967520 47d737630c9a2202d6f63d37ec77450a6292ab26 John Davis MacMillan <jdmacmil@ncsu.edu> 1693420610 -0400	commit: Implemented review rating system
