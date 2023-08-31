@@ -9,6 +9,7 @@ const UpdateRestaurant = () => {
     const {restaurants} = useContext(RestaurantsContext);
     const [name, setName] = useState("");
     const [location, setLocation] = useState("");
+    const [cuisine, setCuisine] = useState("");
     const [priceRange, setPriceRange] = useState("");
 
     useEffect(() => {
@@ -17,6 +18,7 @@ const UpdateRestaurant = () => {
         console.log(response.data.data)
         setName(response.data.data.restaurant.name);
         setLocation(response.data.data.restaurant.location);
+        setCuisine(response.data.data.restaurant.cuisine);
         setPriceRange(response.data.data.restaurant.price_range);
       };
       fetchData();
@@ -26,7 +28,8 @@ const UpdateRestaurant = () => {
       e.preventDefault()
       const updatedRestaurant = await RestaurantFinder.put(`/${id}`, {
         name, 
-        location, 
+        location,
+        cuisine, 
         price_range: priceRange
       });
       history("/");
@@ -56,6 +59,18 @@ const UpdateRestaurant = () => {
             onChange={e => setLocation(e.target.value)}
             type = 'text' 
             id = "location" 
+            className = 'form-control'/>
+        </div>
+
+        <div className='form-group'>
+          <label htmlFor="cuisine">
+              Cuisine
+          </label>
+          <input 
+            value = {cuisine}
+            onChange={e => setCuisine(e.target.value)}
+            type = 'text' 
+            id = "cuisine" 
             className = 'form-control'/>
         </div>
 

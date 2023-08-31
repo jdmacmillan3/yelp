@@ -7,6 +7,7 @@ const AddRestaurant = () => {
     const [name, setName] = useState("");
     const [location, setLocation] = useState("");
     const [priceRange, setPriceRange] = useState("Price Range");
+    const [cuisine, setCuisine] = useState("");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -14,6 +15,7 @@ const AddRestaurant = () => {
             const response = await RestaurantFinder.post("/", {
                 name: name,
                 location: location,
+                cuisine: cuisine,
                 price_range: priceRange,
             });
             addRestaurants(response.data.data.restaurant);
@@ -35,7 +37,11 @@ const AddRestaurant = () => {
                             onChange = {e => setLocation(e.target.value)}
                             className = "form-control" 
                             type="text" 
-                            placeholder="Location"/>
+                            placeholder="Location"
+                    />
+                </div>
+                <div className="col">
+                    <input value = {cuisine} onChange = {e => setCuisine(e.target.value)} type="text" className="form-control" placeholder="Cuisine" />
                 </div>
                 <div className='col'>
                     <select 

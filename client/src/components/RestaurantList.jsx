@@ -61,6 +61,7 @@ const RestaurantList = () => {
                 <tr className = "bg-primary">
                     <th scope = "col">Restaurant</th>
                     <th scope = "col">Location</th>
+                    <th scope = "col">Cuisine</th>
                     <th scope = "col">Price Range</th>
                     <th scope = "col">Rating</th>
                     <th scope = "col">Edit</th>
@@ -73,6 +74,7 @@ const RestaurantList = () => {
                         <tr onClick = {() => handleRestaurantSelect(restaurant.id)} key = {restaurant.id}>
                             <td>{restaurant.name}</td>
                             <td>{restaurant.location}</td>
+                            <td>{restaurant.cuisine}</td>
                             <td>{"$".repeat(restaurant.price_range)}</td>
                             <td>{renderRating(restaurant)}</td>
                             <td><button 
