@@ -1,7 +1,7 @@
 import React from 'react'
 import Header from '../components/Header'
 import AddRestaurant from '../components/AddRestaurant'
-import Filter from '../components/Filter'
+import Sort from '../components/Sort'
 import RestaurantList from '../components/RestaurantList'
 
 const Home = () => {
@@ -9,7 +9,7 @@ const Home = () => {
     <div>
         <Header />
         <AddRestaurant />
-        <Filter />
+        <Sort />
         <RestaurantList />
     </div>
   )
