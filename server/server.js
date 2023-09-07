@@ -19,16 +19,17 @@ app.use(express.json());
 
 // Get all restaurants
 app.get("/api/v1/restaurants", async (req, res) => {
-    const sortColumn = req.query.sortBy;
-    //console.log(sortColumn);
-
-    if (sortColumn !== undefined){
+    console.log(req.query.sortBy);
+    if (req.query.sortBy.includes(`desc`)){
+        const sortColumn = req.query.sortBy.substring(0, req.query.sortBy.length - 5);
+        console.log(sortColumn);
+        console.log(`hi`);
         try{
             const results = await db.query("SELECT * FROM restaurants");
             const restaurantRatingsData = await db.query(
                 `SELECT * FROM restaurants LEFT JOIN (SELECT restaurant_id, COUNT(*), TRUNC(AVG(rating), 1) 
                 AS average_rating FROM reviews GROUP BY restaurant_id) reviews ON restaurants.id = reviews.restaurant_id
-                ORDER BY ${sortColumn} ASC`
+                ORDER BY ${sortColumn} DESC`
             );
             res.status(200).json({
                 status: "success",
@@ -36,30 +37,52 @@ app.get("/api/v1/restaurants", async (req, res) => {
                 data: {
                     restaurants: restaurantRatingsData.rows,
                 }
-            });
-        } catch (err){
-
-        }
-    }
-    else {
-        try{
-            const restaurantRatingsData = await db.query(
-                `SELECT * FROM restaurants LEFT JOIN (SELECT restaurant_id, COUNT(*), TRUNC(AVG(rating), 1) 
-                AS average_rating FROM reviews GROUP BY restaurant_id) reviews ON restaurants.id = reviews.restaurant_id
-                ORDER BY id ASC`
-            );
-        // console.log("results", results);
-        // console.log(`restaurant data`, restaurantRatingsData);
-            res.status(200).json({
-                status: "success",
-                results: restaurantRatingsData.rows.length,
-                data: {
-                    restaurants: restaurantRatingsData.rows,
-                }
-            });
+            })
         } catch (err){
             console.log(err);
         }
+    }
+    else {
+        const sortColumn = req.query.sortBy;
+        if (sortColumn !== undefined){
+            try{
+                const results = await db.query("SELECT * FROM restaurants");
+                const restaurantRatingsData = await db.query(
+                    `SELECT * FROM restaurants LEFT JOIN (SELECT restaurant_id, COUNT(*), TRUNC(AVG(rating), 1) 
+                    AS average_rating FROM reviews GROUP BY restaurant_id) reviews ON restaurants.id = reviews.restaurant_id
+                    ORDER BY ${sortColumn} ASC`
+                );
+                res.status(200).json({
+                    status: "success",
+                    results: restaurantRatingsData.rows.length,
+                    data: {
+                        restaurants: restaurantRatingsData.rows,
+                    }
+                });
+            } catch (err){
+    
+            }
+        }
+        else {
+            try{
+                const restaurantRatingsData = await db.query(
+                    `SELECT * FROM restaurants LEFT JOIN (SELECT restaurant_id, COUNT(*), TRUNC(AVG(rating), 1) 
+                    AS average_rating FROM reviews GROUP BY restaurant_id) reviews ON restaurants.id = reviews.restaurant_id
+                    ORDER BY id ASC`
+                );
+            // console.log("results", results);
+            // console.log(`restaurant data`, restaurantRatingsData);
+                res.status(200).json({
+                    status: "success",
+                    results: restaurantRatingsData.rows.length,
+                    data: {
+                        restaurants: restaurantRatingsData.rows,
+                    }
+                });
+            } catch (err){
+                console.log(err);
+            }
+        } 
     }
 });
     

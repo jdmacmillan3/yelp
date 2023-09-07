@@ -1,24 +1,37 @@
-import React, {useContext, useEffect} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import RestaurantFinder from '../apis/RestaurantFinder';
 import { RestaurantsContext } from '../context/RestaurantsContext';
 import { useNavigate } from 'react-router-dom';
 import StarRating from './StarRating';
 
-const RestaurantList = () => {
+const RestaurantList = ({sortColumn}) => {
     const {restaurants, setRestaurants} = useContext(RestaurantsContext);
+
     let history = useNavigate();
     useEffect(() => {
         const fetchData  = async() => {
-            try{
-                const response = await RestaurantFinder.get("/");
-                setRestaurants(response.data.data.restaurants);
-            } catch(err){
-
-            }
+            // if (sortColumn.includes('dsc')){
+            //     //sortColumn = sortColumn.substring(0, sortColumn.length - 4);
+            //     console.log(sortColumn);
+            //     try{
+            //         const response = await RestaurantFinder.get(`/?sortBy=${sortColumn}&sortDirection=desc`);
+            //         setRestaurants(response.data.data.restaurants);
+            //     } catch(err){
+            //         console.log(err);
+            //     }
+            // }
+            // else{
+                try{
+                    const response = await RestaurantFinder.get(`/?sortBy=${sortColumn}`);
+                    setRestaurants(response.data.data.restaurants);
+                } catch(err){
+                    console.log(err);
+                }
+           // }
         };
 
         fetchData();
-    },[]);
+    },[setRestaurants, sortColumn]);
 
     const handleDelete = async (e, id) => {
         e.stopPropagation();
